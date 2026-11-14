@@ -1,7 +1,6 @@
 package com.ems.ems_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,27 +12,30 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employee",
+        uniqueConstraints = {
+        @UniqueConstraint(name = "uk_employee_email", columnNames = "email"),
+        @UniqueConstraint(name = "uk_employee_mobile_number", columnNames = "mobile_number")
+})
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name", length = 50, nullable = false )
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(name = "mobile_number", length = 15, nullable = false, unique = true)
+    @Column(name = "mobile_number", length = 16, nullable = false)
     private String mobileNumber;
 
     @Column(name = "date_of_birth", nullable = false)
@@ -42,7 +44,7 @@ public class Employee {
     @Column(name = "joined_at", nullable = false)
     private LocalDate joinedAt;
 
-    @Column(name = "designation", length = 50)
+    @Column(name = "designation", length = 50, nullable = false)
     private String designation;
 
     @Column(name = "salary", nullable = false, precision = 10, scale = 2)
