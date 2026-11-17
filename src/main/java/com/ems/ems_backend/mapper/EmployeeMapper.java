@@ -23,7 +23,6 @@ public final class EmployeeMapper {
         employee.setMobileNumber(dto.mobileNumber());
         employee.setDesignation(dto.designation());
         employee.setDateOfBirth(dto.dateOfBirth());
-        employee.setJoinedAt(dto.joinedAt());
         employee.setSalary(dto.salary());
         return employee;
 
