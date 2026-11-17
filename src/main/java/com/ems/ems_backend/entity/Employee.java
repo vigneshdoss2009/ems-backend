@@ -41,7 +41,7 @@ public class Employee {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @CreationTimestamp
+
     @Column(name = "joined_at", nullable = false, updatable = false)
     private LocalDate joinedAt;
 

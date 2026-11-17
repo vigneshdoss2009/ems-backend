@@ -23,6 +23,7 @@ public final class EmployeeMapper {
         employee.setMobileNumber(dto.mobileNumber());
         employee.setDesignation(dto.designation());
         employee.setDateOfBirth(dto.dateOfBirth());
+        employee.setJoinedAt(dto.joinedAt());
         employee.setSalary(dto.salary());
         return employee;
 
@@ -31,6 +32,13 @@ public final class EmployeeMapper {
 
 
     public static EmployeeResponseDto toResponse(Employee employee) {
+
+
+        if(employee == null) {
+            return null;
+        }
+
+
         return new EmployeeResponseDto(
                 employee.getId(),
                 employee.getFirstName(),
