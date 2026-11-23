@@ -41,7 +41,8 @@ public class Employee {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(name = "joined_at", nullable = false)
+
+    @Column(name = "joined_at", nullable = false, updatable = false)
     private LocalDate joinedAt;
 
     @Column(name = "designation", length = 50, nullable = false)
