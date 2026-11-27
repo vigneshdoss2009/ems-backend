@@ -8,19 +8,20 @@ import com.ems.ems_backend.exception.ResourceNotFoundException;
 import com.ems.ems_backend.mapper.EmployeeMapper;
 import com.ems.ems_backend.repository.EmployeeRepository;
 import com.ems.ems_backend.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-
+    
 
     // GetEmployeeById
+    @Override
+    @Transactional(readOnly = true)
     public EmployeeResponseDto getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
@@ -30,6 +31,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     // CreateEmployee
+    @Override
+    @Transactional
     public EmployeeResponseDto createEmployee(EmployeeRequestDto request) {
 
         if(employeeRepository.existsByEmail(request.email())) {
@@ -37,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if(employeeRepository.existsByMobileNumber(request.mobileNumber())) {
-            throw new DuplicateResourceException("Mobile Number already exists: " + request.mobileNumber());
+            throw new DuplicateResourceException("Mobile number already exists: " + request.mobileNumber());
         }
 
         Employee employee = EmployeeMapper.toEntity(request);
